@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Namas’thés — La carte des pizzas</title>
+<meta name="description" content="La carte des pizzas de Namas’thés à Saint-Viance : tailles enfant, M et XL, calzones et suppléments. À commander par téléphone au 05 55 23 10 16 ou au comptoir.">
+<meta name="theme-color" content="#5A4538">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brun: #5A4538; --brun-fonce: #3F3027; --beige: #C4A792; --beige-clair: #E6D9CC;
+    --creme: #F2EFEA; --blanc: #FBF9F6; --texte: #4A3A2F; --discret: #7C6A5D;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--creme); color: var(--texte); font-family: 'Poppins', system-ui, sans-serif; font-size: 15px; line-height: 1.45; padding-bottom: 76px; }
+  .damier { height: 36px; background-color: var(--creme);
+    background-image: repeating-conic-gradient(var(--brun) 0 25%, transparent 0 50%); background-size: 24px 24px; }
+  .damier.clair { background-image: repeating-conic-gradient(var(--beige) 0 25%, transparent 0 50%); }
+  .damiers { display: grid; grid-template-columns: 1fr 1fr; }
+
+  .header { text-align: center; padding: 14px 16px 10px; }
+  .header .maison { font-family: 'Poppins', sans-serif; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; font-size: 12px; color: var(--discret); }
+  .header h1 { font-family: 'Antonio', sans-serif; font-weight: 700; font-size: 74px; line-height: .95; color: var(--brun); letter-spacing: .01em; }
+  .tailles { display: flex; justify-content: center; gap: 22px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--beige); }
+  .tailles span { display: flex; flex-direction: column; align-items: center; font-weight: 600; font-size: 13px; color: var(--brun); line-height: 1.2; }
+  .tailles small { font-weight: 400; font-size: 12px; color: var(--discret); }
+
+  .nav { position: sticky; top: 0; z-index: 10; background: var(--creme); border-bottom: 1px solid var(--beige-clair);
+    display: flex; gap: 6px; overflow-x: auto; padding: 8px 12px; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-tab { flex: none; border: 1px solid var(--beige); background: var(--blanc); color: var(--brun); border-radius: 999px;
+    font: 500 13px 'Poppins', sans-serif; padding: 8px 14px; cursor: pointer; }
+  .nav-tab.active { background: var(--brun); border-color: var(--brun); color: #fff; }
+
+  main { max-width: 640px; margin: 0 auto; padding: 12px 14px 4px; }
+  .section { display: none; flex-direction: column; gap: 10px; }
+  .section.active { display: flex; }
+  .sec-header { padding: 4px 2px 2px; }
+  .sec-header h2 { font-family: 'Antonio', sans-serif; font-weight: 700; font-size: 32px; line-height: 1; color: var(--brun); text-transform: uppercase; }
+  .sec-header p { font-size: 13px; color: var(--discret); margin-top: 2px; }
+
+  .pizza { background: var(--blanc); border: 1px solid var(--beige-clair); border-radius: 14px; padding: 12px 14px; }
+  .pizza-haut { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; }
+  .pizza h3 { font-weight: 600; font-size: 17px; color: var(--brun); text-transform: uppercase; letter-spacing: .02em; }
+  .ing { font-size: 13.5px; color: var(--discret); margin-top: 2px; }
+  .prix { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .taille { display: flex; flex-direction: column; min-width: 86px; background: var(--creme); border-radius: 10px; padding: 5px 10px; }
+  .taille small { font-size: 11.5px; font-weight: 600; color: var(--brun); }
+  .taille small i { font-style: normal; font-weight: 400; color: var(--discret); }
+  .taille b { font-size: 16px; font-weight: 600; color: var(--texte); }
+  .badge { font-size: 11.5px; font-weight: 600; border-radius: 999px; padding: 2px 9px; background: var(--brun); color: #fff; }
+  .badge.hors { background: var(--beige-clair); color: var(--brun); }
+  .pizza.hors-saison { opacity: .72; }
+  .voir-photo { margin-left: auto; border: 1px solid var(--beige); background: transparent; border-radius: 999px; font: 500 12px 'Poppins'; color: var(--brun); padding: 3px 10px; cursor: pointer; }
+
+  .supp { list-style: none; background: var(--blanc); border: 1px solid var(--beige-clair); border-radius: 14px; padding: 6px 14px; }
+  .supp li { display: flex; align-items: baseline; gap: 8px; padding: 9px 0; font-size: 15px; border-top: 1px solid var(--creme); }
+  .supp li:first-child { border-top: 0; }
+  .supp i { flex: 1; border-bottom: 1px dotted var(--beige); transform: translateY(-4px); }
+  .supp b { font-weight: 600; }
+  .note { font-size: 13px; color: var(--discret); padding: 0 2px; }
+
+  .infos { background: var(--blanc); border: 1px solid var(--beige-clair); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .infos h3 { font-weight: 600; font-size: 15px; color: var(--brun); }
+  .infos p { font-size: 14px; }
+  .horaires { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 14px; }
+  .horaires span:nth-child(odd) { color: var(--discret); }
+  .boutons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .bouton { display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 12px; border: 1px solid var(--beige);
+    background: var(--blanc); color: var(--brun); font-weight: 500; font-size: 14px; text-decoration: none; text-align: center; padding: 6px 10px; }
+  .bouton.plein { background: var(--brun); color: #fff; border-color: var(--brun); }
+  .bouton.large { grid-column: 1 / -1; }
+
+  .commander { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--brun); color: #fff;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); }
+  .commander p { font-size: 12.5px; line-height: 1.3; }
+  .commander a { flex: none; background: var(--creme); color: var(--brun); text-decoration: none; font-weight: 600; font-size: 14px; border-radius: 999px; padding: 10px 16px; }
+  footer { text-align: center; padding: 14px 16px 10px; font-size: 12px; color: var(--discret); }
+  footer a { color: var(--brun); }
+
+  dialog { border: 0; border-radius: 16px; padding: 14px; max-width: min(92vw, 520px); background: var(--blanc); color: var(--texte); }
+  dialog::backdrop { background: rgba(40, 28, 20, .6); }
+  dialog img { width: 100%; border-radius: 10px; display: block; margin-top: 8px; }
+  dialog h2 { font-size: 16px; font-weight: 600; color: var(--brun); padding-right: 36px; }
+  dialog .fermer { position: absolute; top: 8px; right: 10px; border: 0; background: transparent; font-size: 28px; line-height: 1; color: var(--brun); cursor: pointer; }
+  dialog p { font-size: 12px; color: var(--discret); margin-top: 6px; }
+  @media (min-width: 700px) { .header h1 { font-size: 96px; } }
+</style>
+</head>
+<body>
+<div class="damiers"><div class="damier"></div><div class="damier clair"></div></div>
+<header class="header">
+  <p class="maison">Namas’thés · Saint-Viance</p>
+  <h1>LES PIZZAS</h1>
+  <div class="tailles"><span>Enfant<small>20 cm</small></span><span>M<small>27 cm</small></span><span>XL<small>34 cm</small></span></div>
+</header>
+<nav class="nav" aria-label="Rubriques de la carte">{{NAV}}</nav>
+<main>
+{{SECTIONS}}
+<section class="section" id="sec-infos">
+  <div class="sec-header"><h2>Infos &amp; contact</h2><p>Boulangerie · pizzeria · pâtisserie · salon de thé</p></div>
+  <div class="infos">
+    <h3>Pour commander</h3>
+    <p>Par téléphone ou directement au comptoir.</p>
+    <div class="boutons"><a class="bouton plein large" href="tel:+33555231016">Appeler le 05 55 23 10 16</a></div>
+  </div>
+  <div class="infos">
+    <h3>Horaires de la pizzeria</h3>
+    <div class="horaires"><span>Lundi – samedi</span><span>11h30 – 14h · 19h – 21h</span><span>Dimanche</span><span>11h30 – 13h · 19h – 21h</span></div>
+  </div>
+  <div class="infos">
+    <h3>Nous trouver</h3>
+    <p>1 Place du Commerce<br>19240 Saint-Viance</p>
+    <div class="boutons">
+      <a class="bouton large" href="https://www.google.com/maps/search/?api=1&amp;query=Namas%27th%C3%A9s%201%20Place%20du%20Commerce%2019240%20Saint-Viance" target="_blank" rel="noopener">Itinéraire</a>
+      <a class="bouton" href="https://www.instagram.com/namas.thes/" target="_blank" rel="noopener">Instagram</a>
+      <a class="bouton" href="https://www.tiktok.com/@namas.thes" target="_blank" rel="noopener">TikTok</a>
+      <a class="bouton large" href="https://namasthes.myselfegroupe.com/" target="_blank" rel="noopener">Notre site</a>
+    </div>
+  </div>
+  <div class="infos">
+    <h3>Suivez nos nouvelles sur Carnet Local</h3>
+    <p>Pizza du moment, fermetures, nouveautés : recevez-les directement dans votre téléphone, sans algorithme et sans publicité.</p>
+    <div class="boutons"><a class="bouton large" href="https://carnet-local.fr/namasthes" target="_blank" rel="noopener">Suivre Namas’thés</a></div>
+  </div>
+</section>
+</main>
+<footer>Prix TTC · Photos non contractuelles</footer>
+<div class="damiers"><div class="damier clair"></div><div class="damier"></div></div>
+
+<div class="commander"><p>À commander par téléphone<br>ou directement au comptoir</p><a href="tel:+33555231016">05 55 23 10 16</a></div>
+
+<dialog id="photo"><button class="fermer" type="button" aria-label="Fermer">×</button><h2></h2><img alt=""><p>Photo non contractuelle : la présentation peut varier.</p></dialog>
+
+<script>
+  // Photos des pizzas : ajouter ici le fichier, avec l’identifiant data-dish-id de la pizza.
+  // Exemple : "classic-margherita": { src: "./margherita.jpg", alt: "Pizza Margherita" }
+  var PHOTOS = {};
+
+  // Rubriques
+  document.querySelectorAll('.nav-tab').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.nav-tab').forEach(function (t) { t.classList.toggle('active', t === b); });
+      document.querySelectorAll('.section').forEach(function (s) { s.classList.toggle('active', s.id === 'sec-' + b.dataset.sec); });
+      b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Pizza de saison (raclette) : d'octobre à février
+  var mois = new Date().getMonth(); // 0 = janvier
+  var enSaison = mois >= 9 || mois <= 1;
+  document.querySelectorAll('[data-saison]').forEach(function (b) {
+    if (enSaison) { b.textContent = 'En ce moment · d’octobre à février'; }
+    else { b.textContent = 'De retour en octobre'; b.classList.add('hors'); b.closest('.pizza').classList.add('hors-saison'); }
+  });
+
+  // Photos
+  var dlg = document.getElementById('photo');
+  document.querySelectorAll('.pizza').forEach(function (p) {
+    var ph = PHOTOS[p.dataset.dishId]; if (!ph) return;
+    var btn = p.querySelector('.voir-photo'); btn.hidden = false;
+    btn.addEventListener('click', function () {
+      dlg.querySelector('h2').textContent = p.querySelector('h3').textContent;
+      var img = dlg.querySelector('img'); img.src = ph.src; img.alt = ph.alt || '';
+      dlg.showModal();
+    });
+  });
+  dlg.querySelector('.fermer').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+</script>
+</body>
+</html>

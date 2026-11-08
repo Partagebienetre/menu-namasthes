@@ -52,9 +52,10 @@ def pizza(sec, p):
   cases = ''
   for (t, cm), v in zip(TAILLES, (pe, pm, px)):
     if v is None: continue
-    cases += '<span class="taille"><small>%s <i>%s</i></small><b>%s</b></span>' % (t, cm, prix(v))
+    cases += ('<button type="button" class="taille" data-nom="%s" data-taille="%s" data-cm="%s" data-prix="%.2f">'
+              '<small>%s <i>%s</i></small><b>%s</b><span class="plus" aria-hidden="true">+</span><span class="qte" hidden></span></button>') % (E(nom), t, cm, v, t, cm, prix(v))
   return ('<article class="pizza" data-dish-id="%s"><div class="pizza-haut"><h3>%s</h3>%s'
-          '<button class="voir-photo" type="button" hidden aria-label="Voir la photo">Photo</button></div>'
+          '<button class="voir-photo" type="button" hidden>Voir la photo</button></div>'
           '<p class="ing">%s</p><div class="prix">%s</div></article>') % (did, E(nom), badge, E(ing), cases)
 
 nav = ''.join('<button class="nav-tab%s" type="button" data-sec="%s">%s</button>' % (' active' if i == 0 else '', s[0], E(s[1])) for i, s in enumerate(SECTIONS))
